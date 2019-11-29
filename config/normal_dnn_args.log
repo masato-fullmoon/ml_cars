@@ -1,0 +1,26 @@
+*** [2019-11-27 16:33:05.561058] ***
+Namespace(activaion='relu', alpha=0.3, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, width=224)
+*** [2019-11-27 16:33:36.299597] ***
+Namespace(activation='relu', alpha=0.3, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, width=224)
+*** [2019-11-27 16:36:14.117149] ***
+Namespace(activation='relu', alpha=0.3, color='rgb', gpusave=True, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, width=224)
+*** [2019-11-27 16:38:38.298165] ***
+Namespace(activation='relu', alpha=0.3, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample2', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)
+*** [2019-11-27 16:39:51.009618] ***
+Namespace(activation='relu', alpha=0.3, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)
+*** [2019-11-27 16:42:25.935943] ***
+Namespace(activation='relu', alpha=0.3, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample2', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)
+*** [2019-11-28 16:25:17.481554] ***
+Namespace(activation='relu', alpha=0.3, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, width=224)
+*** [2019-11-28 16:27:49.637808] ***
+Namespace(activation='leakyrelu', alpha=0.2, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='nadam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, width=224)
+*** [2019-11-28 16:28:18.448007] ***
+Namespace(activation='leakyrelu', alpha=0.2, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='nadam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)
+*** [2019-11-28 16:30:25.924067] ***
+Namespace(activation='leakyrelu', alpha=0.2, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='nadam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)
+*** [2019-11-28 16:32:03.531191] ***
+Namespace(activation='leakyrelu', alpha=0.2, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)
+*** [2019-11-28 16:33:30.647780] ***
+Namespace(activation='leakyrelu', alpha=0.2, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)
+*** [2019-11-29 22:21:47.608404] ***
+Namespace(activation='leakyrelu', alpha=0.2, color='rgb', gpusave=False, height=224, ksize=5, modelname='sample2', nodes=1024, optflag=True, optname='adam', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)

@@ -1,0 +1,16 @@
+*** [2019-11-26 00:12:39.547965] ***
+Namespace(engine='google', keyword='dog', num_images=100, savedir='/home/m-ito/scraping-images', seed=False)
+*** [2019-11-26 00:12:41.209799] ***
+Namespace(engine='google', keyword='dog', num_images=100, savedir='/home/m-ito/scraping-images', seed=False)
+*** [2019-11-26 00:12:42.744891] ***
+Namespace(engine='google', keyword='dog', num_images=100, savedir='/home/m-ito/scraping-images', seed=False)
+*** [2019-11-26 00:12:44.636220] ***
+Namespace(engine='google', keyword='dog', num_images=100, savedir='/home/m-ito/scraping-images', seed=False)
+*** [2019-11-26 00:16:04.070372] ***
+Namespace(engine='google', keyword='dog', num_images=100, savedir='/home/m-ito/scraping-images', seed=False)
+*** [2019-11-26 00:16:09.099604] ***
+Namespace(engine='google', keyword='dog', num_images=100, savedir='/home/m-ito/scraping-images', seed=False)
+*** [2019-11-26 00:16:12.793215] ***
+Namespace(engine='google', keyword='dog', num_images=100, savedir='/home/m-ito/scraping-images', seed=False)
+*** [2019-11-26 00:16:16.446544] ***
+Namespace(engine='google', keyword='dog', num_images=100, savedir='/home/m-ito/scraping-images', seed=False)
