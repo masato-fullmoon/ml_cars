@@ -125,8 +125,17 @@ class ImageArrangement:
         else:
             self.datasets = (X_tensor, y_vector, n_vector)
 
+        self.class_dict = dirs_dict
+
     def get_datasets(self):
         return self.datasets
+
+    def get_classdict(self, inverse=True):
+        if inverse:
+            # 後々予測のために逆引きが可能なようにしている
+            return {v:k for k,v in self.class_dict.items()}
+        else:
+            return self.class_dict
 
     def load_datasets(self, loadnpz=None):
         if loadnpz is not None:

@@ -195,7 +195,7 @@ class CommandLineArgs:
                 )
         p.add_argument(
                 '-M', '--modelname', help='modelname you use',
-                type=str, choices=['sample1','sample2'], default='sample1',
+                type=str, choices=['sample1','sample2','vgg16','vgg19'], default='sample1',
                 required=False
                 )
         p.add_argument(
@@ -218,6 +218,18 @@ class CommandLineArgs:
                     'leakyrelu','prelu','threshold'
                     ], default='relu', required=False
                 )
+        p.add_argument(
+                '-E', '--epochs', help='learning iterations',
+                type=int, default=100, required=False
+                )
+        p.add_argument(
+                '-B', '--batchsize', help='training batch size',
+                type=int, default=20, required=False
+                )
+        p.add_argument(
+                '-V', '--verbose', help='show learning condition',
+                type=int, choices=[0,1,2], default=0, required=False
+                )
 
         p.add_argument(
                 '--gpusave', help='GPU save flag',
@@ -233,7 +245,11 @@ class CommandLineArgs:
                 )
         p.add_argument(
                 '--optflag', help='model compile flag',
-                action='store_false', required=False
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--caption', help='plot caption flag',
+                action='store_true', required=False
                 )
         p.add_argument(
                 '--alpha', help='LeakyReLU alpha', type=float,
@@ -242,6 +258,10 @@ class CommandLineArgs:
         p.add_argument(
                 '--theta', help='ThresholdedReLU theta', type=float,
                 default=1.0, required=False
+                )
+        p.add_argument(
+                '--dpi', help='Matplotlib dpi param', type=int,
+                default=500, required=False
                 )
 
         param_obj = p.parse_args()
