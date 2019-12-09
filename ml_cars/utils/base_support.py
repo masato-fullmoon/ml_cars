@@ -70,6 +70,9 @@ class Timer:
             else:
                 raise ValueError('API: Slack or LINE')
 
+        self.api = api
+        self.output = output
+
     def timer(self, func):
         def __wrapper(*args, **kwargs):
             start = time.time()
@@ -109,7 +112,7 @@ Act-Time:
         try:
             self.s.notify(text=msg)
         except Exception as err:
-            sys.stdout.write(str(err)+NEWLINECODE)
+            cprint('Error: {}'.format(str(err)), 'red', attrs=['bold'])
             sys.exit(1)
 
     def __send_to_line(self, msg):
@@ -121,5 +124,5 @@ Act-Time:
                     LINE_NOTIFY_URL, data=payload, headers=headers
                     )
         except Exception as err:
-            sys.stdout.write(str(err)+NEWLINECODE)
+            cprint('Error: {}'.format(str(err)), 'red', attrs=['bold'])
             sys.exit(1)

@@ -1,6 +1,6 @@
 from functools import partial
-from keras import backend as K
-from keras import losses
+from tensorflow.keras import backend as K
+from tensorflow.keras import losses
 from termcolor import cprint
 import tensorflow as tf
 

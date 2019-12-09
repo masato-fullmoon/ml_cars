@@ -1,4 +1,4 @@
-from keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 from PIL import Image
 from sklearn.model_selection import train_test_split, KFold
 from termcolor import cprint
@@ -8,7 +8,7 @@ import os
 import sys
 import glob
 
-def dataset_rename(in_dirpath=None, out_dirpath=None):
+def dataset_rename(in_dirpath=None, out_dirpath=None, renametype='supervised'):
     '''
     以下のようなディレクトリ構成を想定している.
     それぞれの画像を格納したディレクトリの名称と画像インデックスを参照して
@@ -29,7 +29,13 @@ def dataset_rename(in_dirpath=None, out_dirpath=None):
 
     for d in dirnames:
         dirpath = os.path.join(in_dirpath,d)
-        savedir = mkdirs(os.path.join(out_dirpath,d))
+
+        if renametype == 'supervised':
+            savedir = mkdirs(os.path.join(out_dirpath,d))
+        elif renametype == 'unsupervised':
+            savedir = mkdirs(out_dirpath)
+        else:
+            raise ValueError('renametype: supervised/unsupervised')
 
         # dirpathがディレクトリであれば中まで参照してrenameする
         if os.path.isdir(dirpath):
@@ -98,12 +104,12 @@ class ImageArrangement:
 
         if self.mode == 'L':
             if normtype == 'normalize':
-                X_tensor = np.array(X_base, dtype=np.float32)[:,:,:,np.newaxis]/255.
+                X_tensor = np.array(X_base, dtype=np.float32)[:,:,:,np.newaxis]/256.
             elif normtype == 'standard':
                 X_tensor = np.array(X_base, dtype=np.float32)[:,:,:,np.newaxis]/127.5-1.
         elif self.mode == 'RGB':
             if normtype == 'normalize':
-                X_tensor = np.array(X_base, dtype=np.float32)/255.
+                X_tensor = np.array(X_base, dtype=np.float32)/256.
             elif normtype == 'standard':
                 X_tensor = np.array(X_base, dtype=np.float32)/127.5-1.
 

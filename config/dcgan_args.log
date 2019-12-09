@@ -1,0 +1,78 @@
+*** [2019-12-07 22:33:35.385483] ***
+Namespace(autozdim=True, batchsize=200, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-07 22:38:16.297553] ***
+Namespace(autozdim=True, batchsize=200, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-07 22:40:23.082898] ***
+Namespace(autozdim=True, batchsize=200, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-07 22:41:29.786854] ***
+Namespace(autozdim=True, batchsize=200, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-07 22:43:00.315672] ***
+Namespace(autozdim=True, batchsize=200, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-07 22:44:07.101149] ***
+Namespace(autozdim=True, batchsize=200, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-07 22:45:57.687187] ***
+Namespace(autozdim=True, batchsize=200, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=False, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-07 22:48:04.097754] ***
+Namespace(autozdim=True, batchsize=100, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=False, height=112, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=112, zdim=100)
+*** [2019-12-07 22:49:17.350126] ***
+Namespace(autozdim=True, batchsize=100, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=False, height=112, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=112, zdim=100)
+*** [2019-12-07 22:51:31.448667] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=56, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=56, zdim=100)
+*** [2019-12-07 22:56:36.416958] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=56, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=56, zdim=100)
+*** [2019-12-07 23:03:46.530722] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=56, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=56, zdim=100)
+*** [2019-12-07 23:06:14.297220] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=56, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=56, zdim=100)
+*** [2019-12-07 23:13:16.515061] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=56, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=56, zdim=100)
+*** [2019-12-07 23:15:44.028534] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=56, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=56, zdim=100)
+*** [2019-12-09 19:01:03.155760] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=56, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=56, zdim=100)
+*** [2019-12-09 19:43:00.365796] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 22:01:45.308868] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 22:51:22.942914] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 22:53:23.637268] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 22:54:45.073712] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 23:01:01.469177] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 23:04:09.827244] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 23:05:29.262117] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 23:25:31.379024] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 23:36:09.533188] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 23:38:03.173346] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 23:44:54.878804] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 23:49:19.824892] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=56, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=56, zdim=100)
+*** [2019-12-09 23:50:32.053355] ***
+Namespace(autozdim=False, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=56, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=56, zdim=100)
+*** [2019-12-09 23:52:18.929350] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-09 23:58:50.695290] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=224, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=224, zdim=100)
+*** [2019-12-10 00:01:11.290105] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=112, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=112, zdim=100)
+*** [2019-12-10 00:02:22.891091] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=112, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=112, zdim=100)
+*** [2019-12-10 00:03:29.963712] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=112, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=112, zdim=100)
+*** [2019-12-10 00:07:19.590269] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=True, dpi=500, epochs=5000, gpusave=True, height=112, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=112, zdim=100)
+*** [2019-12-10 00:14:57.292030] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=False, dpi=500, epochs=100, gpusave=True, height=112, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=112, zdim=100)
+*** [2019-12-10 00:18:07.862746] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=False, dpi=500, epochs=100, gpusave=True, height=112, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=112, zdim=100)
+*** [2019-12-10 00:20:57.270656] ***
+Namespace(autozdim=True, batchsize=50, color='rgb', debug=False, dpi=500, epochs=100, gpusave=True, height=112, optname='adam', preprocessing='standard', summary=True, summaryout=False, width=112, zdim=100)

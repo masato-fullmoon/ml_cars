@@ -1,0 +1,6 @@
+*** [2019-12-07 21:29:59.515818] ***
+Namespace(color='rgb', height=224, ksize=5, preprocessing='normalize', split='holdout', splitrate=0.2, width=224)
+*** [2019-12-07 21:31:28.177655] ***
+Namespace(color='rgb', height=224, ksize=5, preprocessing='normalize', split='holdout', splitrate=0.2, width=224)
+*** [2019-12-07 22:35:58.132680] ***
+Namespace(color='rgb', height=224, ksize=5, preprocessing='standard', split='holdout', splitrate=0.2, width=224)

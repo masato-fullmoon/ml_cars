@@ -275,15 +275,205 @@ class CommandLineArgs:
         return param_obj
 
     @classmethod
-    def dcgan_args(cls):
-        pass
+    def dcgan_args(cls, logtype=None):
+        methodname = sys._getframe().f_code.co_name
+
+        p = argparse.ArgumentParser(
+                description='DCGAN Image generate arguments'
+                )
+
+        p.add_argument(
+                '-C', '--color', help='Image color',
+                type=str, choices=['gray','rgb'], default='rgb',
+                required=False
+                )
+        p.add_argument(
+                '-H', '--height', help='Image resize-height',
+                type=int, default=224, required=False
+                )
+        p.add_argument(
+                '-W', '--width', help='Image resize-width',
+                type=int, default=224, required=False
+                )
+        p.add_argument(
+                '-P', '--preprocessing', help='Image normalization or standarize',
+                type=str, choices=['normalize','standard'], default='normalize',
+                required=False
+                )
+        p.add_argument(
+                '-Z', '--zdim', help='z-dimension, latent dimension',
+                type=int, default=100, required=False
+                )
+        p.add_argument(
+                '-O', '--optname', help='model optimizer you use',
+                type=str, choices=[
+                    'adam','adadelta','adamax',
+                    'adagrad','sgd','nadam',
+                    'rmsprop'
+                    ], default='adam', required=False
+                )
+        p.add_argument(
+                '-E', '--epochs', help='learning iterations',
+                type=int, default=2000, required=False
+                )
+        p.add_argument(
+                '-B', '--batchsize', help='training batch size',
+                type=int, default=500, required=False
+                )
+
+        p.add_argument(
+                '--gpusave', help='GPU save flag',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--summary', help='show model architecuree summary',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--summaryout', help='write summary logfile',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--autozdim', help='z-dimension auto-setup flag',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--debug', help='GAN training debug flag',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--dpi', help='Matplotlib dpi param', type=int,
+                default=500, required=False
+                )
+
+        param_obj = p.parse_args()
+
+        config_logs(
+                methodname=methodname,
+                logtype=logtype,
+                param_string=str(param_obj)
+                )
+
+        return param_obj
 
     @classmethod
     def vae_args(cls):
         pass
 
     @classmethod
-    def unet_args(cls):
+    def unet_args(cls, logtype=None):
+        methodname = sys._getframe().f_code.co_name
+
+        p = argparse.ArgumentParser(
+                description='U-net autoencoder Image recodec arguments'
+                )
+
+        p.add_argument(
+                '-C', '--color', help='Image color',
+                type=str, choices=['gray','rgb'], default='rgb',
+                required=False
+                )
+        p.add_argument(
+                '-H', '--height', help='Image resize-height',
+                type=int, default=224, required=False
+                )
+        p.add_argument(
+                '-W', '--width', help='Image resize-width',
+                type=int, default=224, required=False
+                )
+        p.add_argument(
+                '-P', '--preprocessing', help='Image normalization or standarize',
+                type=str, choices=['normalize','standard'], default='normalize',
+                required=False
+                )
+        p.add_argument(
+                '-O', '--optname', help='model optimizer you use',
+                type=str, choices=[
+                    'adam','adadelta','adamax',
+                    'adagrad','sgd','nadam',
+                    'rmsprop'
+                    ], default='adam', required=False
+                )
+        p.add_argument(
+                '-S', '--split', help='dataset split method',
+                type=str, choices=['holdout','kfold'], default='holdout',
+                required=False
+                )
+        p.add_argument(
+                '-R', '--splitrate', help='holdout split test-size rate',
+                type=float, default=0.2, required=False
+                )
+        p.add_argument(
+                '-K', '--ksize', help='K-Fold split group-size',
+                type=int, default=5, required=False
+                )
+        p.add_argument(
+                '-A', '--activation', help='sample model custom layer activaion',
+                type=str, choices=[
+                    'relu','tanh','softplus','softsign','elu',
+                    'selu','sigmoid','hard_sigmoid','linear',
+                    'leakyrelu','prelu','threshold'
+                    ], default='relu', required=False
+                )
+        p.add_argument(
+                '-F', '--filters', help='convolution input filter size',
+                type=int, default=512, required=False
+                )
+        p.add_argument(
+                '-E', '--epochs', help='learning iterations',
+                type=int, default=2000, required=False
+                )
+        p.add_argument(
+                '-B', '--batchsize', help='training batch size',
+                type=int, default=500, required=False
+                )
+        p.add_argument(
+                '-V', '--verbose', help='show learning condition',
+                type=int, choices=[0,1,2], default=0, required=False
+                )
+
+        p.add_argument(
+                '--gpusave', help='GPU save flag',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--summary', help='show model architecuree summary',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--summaryout', help='write summary logfile',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--optflag', help='model compile flag',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--caption', help='plot caption flag',
+                action='store_true', required=False
+                )
+        p.add_argument(
+                '--alpha', help='LeakyReLU alpha', type=float,
+                default=0.3, required=False
+                )
+        p.add_argument(
+                '--theta', help='ThresholdedReLU theta', type=float,
+                default=1.0, required=False
+                )
+        p.add_argument(
+                '--dpi', help='Matplotlib dpi param', type=int,
+                default=500, required=False
+                )
+
+        param_obj = p.parse_args()
+
+        config_logs(
+                methodname=methodname,
+                logtype=logtype,
+                param_string=str(param_obj)
+                )
+
+        return param_obj
         pass
 
     @classmethod

@@ -8,7 +8,8 @@ BASEDATASET_DIR = os.path.join(
         os.path.expanduser('~'),'work/git_work/datasets'
         )
 ORIGINAL_DIR = os.path.join(BASEDATASET_DIR, 'cars')
-RENAMED_DIR = os.path.join(BASEDATASET_DIR, 'supervised/rename_cars')
+#RENAMED_DIR = os.path.join(BASEDATASET_DIR, 'supervised/rename_cars')
+RENAMED_DIR = os.path.join(BASEDATASET_DIR, 'unsupervised/rename_cars')
 
 CMD_OBJ = CommandLineArgs.data_arrangement_args(logtype='.log')
 
@@ -20,8 +21,10 @@ METHOD = CMD_OBJ.split
 SPLITRATE = CMD_OBJ.splitrate
 K = CMD_OBJ.ksize
 
+RENAMETYPE = 'unsupervised'
+
 if __name__ == '__main__':
-    #dataset_rename(ORIGINAL_DIR, RENAMED_DIR)
+    #dataset_rename(ORIGINAL_DIR, RENAMED_DIR, RENAMETYPE)
 
     img_arrange = ImageArrangement(
             dataset_dirpath=RENAMED_DIR, color=COLOR_MODE,
@@ -29,6 +32,7 @@ if __name__ == '__main__':
             )
     img_arrange.preprocessing(normtype=NORMTYPE)
     X, y, names = img_arrange.get_datasets()
+    print(X)
 
-    img_arrange.data_split(X, y, names, method=METHOD, splitrate=SPLITRATE, K=K)
-    trains, vals, preds = img_arrange.get_splitdata()
+    #img_arrange.data_split(X, y, names, method=METHOD, splitrate=SPLITRATE, K=K)
+    #trains, vals, preds = img_arrange.get_splitdata()

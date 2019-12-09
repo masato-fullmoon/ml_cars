@@ -1,5 +1,7 @@
 from termcolor import cprint
+from PIL import Image
 from sklearn.metrics import confusion_matrix
+from functools import reduce
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -8,6 +10,7 @@ import sys
 import glob
 import math
 import json
+import operator
 
 try:
     import matplotlib.pyplot as plt
@@ -150,3 +153,55 @@ class Visualizer(__VisualizerBase):
 
         plt.savefig(heatmap_path, dpi=dpi)
         plt.close()
+
+    def save_tiled_generate(self, epoch, generator, zdim=None,
+            tile_h=10, tile_w=10, savedir=None, dpi=500):
+        generater_noise = np.random.normal(0,1,(reduce(operator.mul,(tile_h,tile_w)), zdim))
+        gen_imgs = 0.5*generator.predict(generater_noise)+0.5
+
+        fig, ax = plt.subplots(tile_h,tile_w)
+
+        cnt = 0
+        for h in range(tile_h):
+            for w in range(tile_w):
+                ax[h,w].imshow(gen_imgs[cnt,:,:,0])
+                ax[h,w].axis('off')
+
+                cnt += 1
+
+        savepath = os.path.join(savedir, 'dcgan_{:06}.jpg'.format(epoch))
+        fig.savefig(savepath, dpi=dpi)
+
+    def each_save(self, fake_img, epoch, tile_h=10, tile_w=10, savedir=None, dpi=500):
+        fake_img = fake_img*127.5+127.5
+
+        if fake_img.shape[-1] == 1:
+            fake_img = fake_img.reshape(fake_img.shape[0:2])
+
+        fake_img = Image.fromarray(fake_img.astype(np.uint8)).resize((tile_h,tile_w))
+
+        savepath = os.path.join(savedir, 'dcgan_{:06}.jpg'.format(epoch))
+        fake_img.save(savepath, dpi=dpi)
+
+    def gan_loss_vis(self, loss_df, savedir=None, dpi=500):
+        pass
+
+    def autoencoder_recodec(self, prods, names, savedir=None, dpi=500,
+            resize_shape=None, normtype='noramlize'):
+        assert type(resize_shape) is tuple, \
+                'resize_shape: tuple, ex. (640,390).'
+
+        if normtype == 'normalize':
+            prods *= 256.
+        elif normtype == 'standard':
+            prods = prods*127.5+127.5
+        else:
+            raise ValueError('normtype: normalize/standard')
+
+        for name, prod in zip(names, prods):
+            try:
+                gen_img = Image.fromarray(prod.astype(np.uint8)).resize(resize_shape)
+                gen_img.save(os.path.join(savedir,'{}_gen.jpg'.format(name)))
+            except Exception as err:
+                cprint('Error: {}'.format(str(err)), 'red', attrs=['bold'])
+                sys.exit(1)
