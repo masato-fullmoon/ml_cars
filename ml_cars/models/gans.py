@@ -9,6 +9,7 @@ from termcolor import cprint
 
 from models.learning_indicators import keras_losses
 from models.set_optimizers import optimizer_setup
+from models.model_initializers import KernelInit, BiasInit
 from utils.data_postprocessing import Visualizer
 from utils.base_support import mkdirs, Timer
 
@@ -28,7 +29,8 @@ else:
 
 class GANmodel:
     def __init__(self, imgtensors, gpusave=False, summary=False, summaryout=False,
-            auto_zdim=False, zdim=100, optname='adam', **kwargs):
+            auto_zdim=False, zdim=100, optname='adam', initflag=True, k_initname='he_normal',
+            b_initname='zeros', **kwargs):
         if gpusave:
             phys_devices = tf.config.experimental.list_physical_devices('GPU')
 
@@ -43,6 +45,10 @@ class GANmodel:
 
         self.summary = summary
         self.summaryout = summaryout
+
+        if initflag:
+            self.k_init = KernelInit().kernel_initializer(initname=k_initname, kwargs)
+            self.b_init = BiasInit().bias_initializer(initname=b_initname, kwargs)
 
         if auto_zdim:
             try:
@@ -132,15 +138,28 @@ class GANmodel:
         df = pd.DataFrame(loss_dict)
         df.index = range(1, df.shape[0]+1)
 
+        for c in df.columns:
+            pass
+
     def __sample1_g_forward(self):
+        if self.k_init and self.b_init:
+            kernel_initializer = self.k_init
+            bias_initializer = self.b_init
+        else:
+            kernel_initializer = 'glorot_uniform'
+            bias_initializer = 'zeros'
+
         reshape_unit = self.tensor.shape[1]//4
 
         inputs = Input(shape=(self.zdim,))
 
-        x = Dense(1024)(inputs)
+        x = Dense(1024,kernel_initializer=kernel_initializer,
+                bias_initializer=bias_initializer)(inputs)
         x = BatchNormalization()(x)
         x = Activation('relu')(x)
-        x = Dense(128*reshape_unit*reshape_unit)(x)
+        x = Dense(128*reshape_unit*reshape_unit,
+                kernel_initializer=kernel_initializer,
+                bias_initializer=bias_initializer)(x)
         x = BatchNormalization()(x)
         x = Activation('relu')(x)
 
@@ -159,6 +178,13 @@ class GANmodel:
         return Model(inputs, outputs, name='sample1-generator')
 
     def __sample1_d_forward(self):
+        if self.k_init and self.b_init:
+            kernel_initializer = self.k_init
+            bias_initializer = self.b_init
+        else:
+            kernel_initializer = 'glorot_uniform'
+            bias_initializer = 'zeros'
+
         inputs = Input(shape=self.tensor.shape[1:])
 
         x = Conv2D(64,(5,5),strides=(2,2),padding='same')(inputs)
@@ -167,11 +193,13 @@ class GANmodel:
         x = LeakyReLU(0.2)(x)
 
         fc = Flatten()(x)
-        fc = Dense(256)(fc)
+        fc = Dense(256,kernel_initializer=kernel_initializer,
+                bias_initializer=bias_initializer)(fc)
         fc = LeakyReLU(0.2)(fc)
         fc = Dropout(0.5)(fc)
 
-        outputs = Dense(1,activation='sigmoid')(fc)
+        outputs = Dense(1,kernel_initializer=kernel_initializer,
+                bias_initializer=bias_initializer,activation='sigmoid')(fc)
 
         return Model(inputs, outputs, name='sample1-discriminator')
 

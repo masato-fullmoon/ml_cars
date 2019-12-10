@@ -101,7 +101,7 @@ Act-Time:
                 self.__send_to_line(msg)
 
             if self.output:
-                sys.stdout.write(msg+NEWLINECODE)
+                cprint(msg, 'cyan', attrs=['bold'])
 
             if res is not None:
                 return res
