@@ -12,10 +12,10 @@ function anaconda_install() {
         echo 'This Python is 2.x.x, you should install Python 3.x.x'
 
         SAVEBASEDIR=$1 # 保存先ディレクトリ, ホームディレクトリが楽
-        INSTALLERURL=`python anaconda_installer_py2.py $2`
+        INSTALLERURL=`python anaconda3_installer_py2.py $2`
     else
         SAVEBASEDIR=$1
-        INSTALLERURL=`python anaconda_installer_py3.py $2`
+        INSTALLERURL=`python anaconda3_installer_py3.py $2`
     fi
 
     if ! existscommand wget; then
