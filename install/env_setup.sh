@@ -10,18 +10,22 @@ function existscommand() {
 function anaconda_install() {
     if [ -e `python --version` | grep 'Python 2.' ]; then
         echo 'This Python is 2.x.x, you should install Python 3.x.x'
-        exit 1;
-    else
-        SAVEBASEDIR=$1 # 保存先ディレクトリ, ホームディレクトリが楽
-        INSTALLERURL=`python anaconda_installer.py --ostype $2`
 
-        if ! existscommand wget; then
-            # curlコマンドで取得したファイル名を指定したディレクトリに送る方法
-            cd ${SAVEBASEDIR} && { curl -O ${INSTALLERURL} ; cd -; }
-        else
-            wget -P ${SAVEBASEDIR} ${INSTALLERURL}
-        fi
+        SAVEBASEDIR=$1 # 保存先ディレクトリ, ホームディレクトリが楽
+        INSTALLERURL=`python anaconda_installer_py2.py $2`
+    else
+        SAVEBASEDIR=$1
+        INSTALLERURL=`python anaconda_installer_py3.py $2`
     fi
+
+    if ! existscommand wget; then
+        # curlコマンドで取得したファイル名を指定したディレクトリに送る方法
+        cd ${SAVEBASEDIR} && { curl -O ${INSTALLERURL} ; cd -; }
+    else
+        wget -P ${SAVEBASEDIR} ${INSTALLERURL}
+    fi
+
+    echo 'Anaconda3 install acomplished.'
 }
 
 # ---------- main programs -----------
@@ -53,6 +57,7 @@ if ! existscommand conda; then
 
         if [ ${INSTALLFLAG} == 'yes' ]; then
             echo 'Start to install Anaconda3.'
+            anaconda_install $HOME ${OS}
             break
         elif [ ${INSTALLFLAG} == 'no' ]; then
             echo 'Stop installing anaconda3, try again.'
