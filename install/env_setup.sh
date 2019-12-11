@@ -39,23 +39,31 @@ fi
 if ! existscommand conda; then
     echo 'conda is not found.'
 
-    PROCESSFLAG=2
+    PROCESSFLAG=0
 
-    while [ ${PROCESSFLAG} -eq 2 ]
+    while [ ${PROCESSFLAG} -eq 0 ]
     do
         echo 'auto-install anaconda3 installer: [yes/no] >>> '
         read INSTALLFLAG
 
         if [ ${INSTALLFLAG} == 'yes' ]; then
+            ${PROCESSFLAG}=1
             echo 'Start to install Anaconda3.'
-            break
         elif [ ${INSTALLFLAG} == 'no' ]; then
+            ${PROCESSFLAG}=1
             echo 'Stop installing anaconda3, try again.'
+        elif [ ${#INSTALLFLAG} -eq 0 ]; then
+            ${PROCESSFLAG}=0
+        else
+            ${PROCESSFLAG}=0
+        fi
+
+        if [ ${PROCESSFLAG} -eq 1 ]; then
             break
         else
             continue
         fi
     done
 else
-    echo 'Anaconda existed.'
+    echo 'Anaconda existed, please check whether or not anaconda3.'
 fi

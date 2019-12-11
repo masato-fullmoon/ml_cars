@@ -120,7 +120,9 @@ class KernelInit(__InitializerBase):
     def __init__(self):
         super().__init__()
 
-    def kernel_initializer(self, initname='he_normal', **kwargs):
+    def kernel_initializer(self, initname='he_normal', params_dict=None):
+        assert type(params_dict) is dict, 'initializer parameters: dict type'
+
         try:
             if initname == 'base':
                 return self.base_initializer()
@@ -129,32 +131,35 @@ class KernelInit(__InitializerBase):
             elif initname == 'ones':
                 return self.ones()
             elif initname == 'constant':
-                return self.constant(kwargs['value'])
+                return self.constant(params_dict['value'])
             elif initname == 'random_normal':
-                return self.random_normal(kwargs['mean'], kwargs['std'], kwargs['seed'])
+                return self.random_normal(
+                        params_dict['mean'], params_dict['std'], params_dict['seed'])
             elif initname == 'random_uniform':
-                return self.random_uniform(kwargs['min_'], kwargs['max_'], kwargs['seed'])
+                return self.random_uniform(
+                        params_dict['min_'], params_dict['max_'], params_dict['seed'])
             elif initname == 'truncated_normal':
-                return self.truncated_normal(kwargs['mean'], kwargs['std'], kwargs['seed'])
+                return self.truncated_normal(
+                        params_dict['mean'], params_dict['std'], params_dict['seed'])
             elif initname == 'variance_scaling':
-                return self.variance_scaling(kwargs['scale'], kwargs['mode'],
-                        kwargs['distribution'], kwargs['seed'])
+                return self.variance_scaling(params_dict['scale'], params_dict['mode'],
+                        params_dict['distribution'], params_dict['seed'])
             elif initname == 'orthogonal':
-                return self.orthogonal(kwargs['gain'], kwargs['seed'])
+                return self.orthogonal(params_dict['gain'], params_dict['seed'])
             elif initname == 'identify':
-                return self.identify(kwargs['gain'])
+                return self.identify(params_dict['gain'])
             elif initname == 'glorot_normal':
-                return self.glorot_normal(kwargs['seed'])
+                return self.glorot_normal(params_dict['seed'])
             elif initname == 'glorot_uniform':
-                return self.glorot_uniform(kwargs['seed'])
+                return self.glorot_uniform(params_dict['seed'])
             elif initname == 'he_normal':
-                return self.he_normal(kwargs['seed'])
+                return self.he_normal(params_dict['seed'])
             elif initname == 'he_uniform':
-                return self.he_uniform(kwargs['seed'])
+                return self.he_uniform(params_dict['seed'])
             elif initname == 'lecun_normal':
-                return self.lecun_normal(kwargs['seed'])
+                return self.lecun_normal(params_dict['seed'])
             elif initname == 'lecun_uniform':
-                return self.lecun_uniform(kwargs['seed'])
+                return self.lecun_uniform(params_dict['seed'])
             else:
                 raise ValueError('Incorrect initname.')
         except Exception as err:
@@ -166,7 +171,9 @@ class BiasInit(__InitializerBase):
     def __init__(self):
         super().__init__()
 
-    def bias_initializer(self, initname='zeros', **kwargs):
+    def bias_initializer(self, initname='zeros', params_dict=None):
+        assert type(params_dict) is dict, 'initializer parameters: dict type'
+
         try:
             if initname == 'base':
                 return self.base_initializer()
@@ -175,32 +182,35 @@ class BiasInit(__InitializerBase):
             elif initname == 'ones':
                 return self.ones()
             elif initname == 'constant':
-                return self.constant(kwargs['value'])
+                return self.constant(params_dict['value'])
             elif initname == 'random_normal':
-                return self.random_normal(kwargs['mean'], kwargs['std'], kwargs['seed'])
+                return self.random_normal(
+                        params_dict['mean'], params_dict['std'], params_dict['seed'])
             elif initname == 'random_uniform':
-                return self.random_uniform(kwargs['min_'], kwargs['max_'], kwargs['seed'])
+                return self.random_uniform(
+                        params_dict['min_'], params_dict['max_'], params_dict['seed'])
             elif initname == 'truncated_normal':
-                return self.truncated_normal(kwargs['mean'], kwargs['std'], kwargs['seed'])
+                return self.truncated_normal(
+                        params_dict['mean'], params_dict['std'], params_dict['seed'])
             elif initname == 'variance_scaling':
-                return self.variance_scaling(kwargs['scale'], kwargs['mode'],
-                        kwargs['distribution'], kwargs['seed'])
+                return self.variance_scaling(params_dict['scale'], params_dict['mode'],
+                        params_dict['distribution'], params_dict['seed'])
             elif initname == 'orthogonal':
-                return self.orthogonal(kwargs['gain'], kwargs['seed'])
+                return self.orthogonal(params_dict['gain'], params_dict['seed'])
             elif initname == 'identify':
-                return self.identify(kwargs['gain'])
+                return self.identify(params_dict['gain'])
             elif initname == 'glorot_normal':
-                return self.glorot_normal(kwargs['seed'])
+                return self.glorot_normal(params_dict['seed'])
             elif initname == 'glorot_uniform':
-                return self.glorot_uniform(kwargs['seed'])
+                return self.glorot_uniform(params_dict['seed'])
             elif initname == 'he_normal':
-                return self.he_normal(kwargs['seed'])
+                return self.he_normal(params_dict['seed'])
             elif initname == 'he_uniform':
-                return self.he_uniform(kwargs['seed'])
+                return self.he_uniform(params_dict['seed'])
             elif initname == 'lecun_normal':
-                return self.lecun_normal(kwargs['seed'])
+                return self.lecun_normal(params_dict['seed'])
             elif initname == 'lecun_uniform':
-                return self.lecun_uniform(kwargs['seed'])
+                return self.lecun_uniform(params_dict['seed'])
             else:
                 raise ValueError('Incorrect initname.')
         except Exception as err:

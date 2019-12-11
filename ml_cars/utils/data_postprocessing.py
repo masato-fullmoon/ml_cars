@@ -172,7 +172,7 @@ class Visualizer(__VisualizerBase):
         savepath = os.path.join(savedir, 'dcgan_{:06}.jpg'.format(epoch))
         fig.savefig(savepath, dpi=dpi)
 
-    def each_save(self, fake_img, epoch, tile_h=10, tile_w=10, savedir=None, dpi=500):
+    def each_save(self, fake_img, epoch, tile_h=500, tile_w=500, savedir=None):
         fake_img = fake_img*127.5+127.5
 
         if fake_img.shape[-1] == 1:
@@ -181,12 +181,25 @@ class Visualizer(__VisualizerBase):
         fake_img = Image.fromarray(fake_img.astype(np.uint8)).resize((tile_h,tile_w))
 
         savepath = os.path.join(savedir, 'dcgan_{:06}.jpg'.format(epoch))
-        fake_img.save(savepath, dpi=dpi)
+        fake_img.save(savepath)
 
     def gan_loss_vis(self, loss_df, savedir=None, dpi=500):
-        pass
+        plt.subplots_adjust(wspace=0.2, hspace=0.3) # subplotのグラフが被らないように
 
-    def autoencoder_recodec(self, prods, names, savedir=None, dpi=500,
+        for i,c in enumerate(loss_df.columns):
+            plt.subplot(2,2,i+1)
+            plt.plot(loss_df[c], label=c, color='blue', lw=1)
+            plt.xlabel('Learning Iterations(epochs)')
+
+            if i % 2 == 0:
+                plt.ylabel('Loss Values')
+
+            plt.legend()
+
+        savepath = os.path.join(savedir, 'dcgan_loss_learningcurve.jpg')
+        plt.savefig(savepath, dpi=dpi)
+
+    def autoencoder_recodec(self, prods, names, savedir=None,
             resize_shape=None, normtype='noramlize'):
         assert type(resize_shape) is tuple, \
                 'resize_shape: tuple, ex. (640,390).'

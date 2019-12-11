@@ -36,9 +36,10 @@ BATCHSIZE = CMD_ARGS.batchsize
 NUM_DIV = 2
 SAVE_ITERATION = 100
 DEBUG = CMD_ARGS.debug
-GENERATE_TYPE = 'tiled_generate'
-TILE_HEIGHT = 10
-TIME_WIDTH = 10
+#GENERATE_TYPE = 'tiled_generate'
+GENERATE_TYPE = 'each_save_generate'
+TILE_HEIGHT = 500
+TIME_WIDTH = 500
 DPI = CMD_ARGS.dpi
 
 if __name__ == '__main__':
@@ -54,29 +55,33 @@ if __name__ == '__main__':
     ''' ----- DCGAN images generate '''
 
     # Adamを使う時はこれらを**kwargsとしてインスタンスに入れる
-    lr = 0.005
-    beta_1 = 0.001
-    beta_2 = 0.8
+    lr = 2e-4
+    beta_1 = 0.05
+    beta_2 = 0.67
     amsgrad = False
-    #decay = 1e-4
-    #momentum = 0.9
-    #nesterov = True
+    decay = 1e-5
+    momentum = 0.9
+    nesterov = True
+
+    # 各レイヤーの初期化パラメーター
+    seed = None
 
     dcgan = GANmodel(
             imgtensors=X, gpusave=GPUSAVE, summary=SUMMARY,
             summaryout=SUMMARYOUT, auto_zdim=AUTO_ZDIM, zdim=ZDIM,
             optnam=OPTNAME,
-            lr=lr, beta_1=beta_1, beta_2=beta_2, amsgrad=amsgrad
+            lr=lr, beta_1=beta_1, beta_2=beta_2, amsgrad=amsgrad,
+            momentum=momentum, nesterov=nesterov, seed=seed
             )
 
     loss_dict = dcgan.dcgan_train(
             epochs=EPOCHS, batch_size=BATCHSIZE, num_div=NUM_DIV,
             save_iter=SAVE_ITERATION, debug=DEBUG, gentype=GENERATE_TYPE,
-            tile_h=TILE_HEIGHT, tile_w=TIME_WIDTH, savedir=RESULT_BASEDIR,
+            tile_h=TILE_HEIGHT, tile_w=TIME_WIDTH, savebasedir=RESULT_BASEDIR,
             dpi=DPI
             )
 
     dcgan.property_visualization(
             loss_dict=loss_dict, gentype=GENERATE_TYPE,
-            savedir=RESULT_BASEDIR, dpi=DPI
+            savebasedir=RESULT_BASEDIR, dpi=DPI
             )

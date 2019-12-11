@@ -1,3 +1,4 @@
+from tensorflow.keras.datasets import mnist, cifar10
 from tensorflow.keras.utils import to_categorical
 from PIL import Image
 from sklearn.model_selection import train_test_split, KFold
@@ -63,6 +64,89 @@ def dataset_rename(in_dirpath=None, out_dirpath=None, renametype='supervised'):
         cprint('No files in [{}], remove this dir.'.format(os.path.abspath(in_dirpath)),
                 'cyan', attrs=['bold'])
         os.rmdir(in_dirpath)
+
+class SampleImageArrangement:
+    def __init__(self, imgtype='mnist'):
+        if imgtype == 'mnist':
+            # grayscale digit images (28,28)
+            (Xlearn, ylearn), (Xpred, ypred) = mnist.load_data()
+
+            # grayscaleはむりやり三次元テンソルにする (28,28,1)
+            Xlearn = Xlearn[:,:,:,np.newaxis]
+            Xpred = Xpred[:,:,:,np.newaxis]
+        elif imgtype == 'cifar10':
+            # RGB object images (28,28,3)
+            (Xlearn, ylearn), (Xpred, ypred) = cifar10.load_data()
+        else:
+            raise ValueError('imgtype: mnist/cifar10')
+
+        Xlearn = Xlearn.astype('float32')/256.
+        Xpred = Xpred.astype('float32')/256.
+
+        npred = np.array([str(n) for n in ypred], dtype=str)
+        self.class_dict = {str(d):i for i,d in enumerate(set(ylearn))}
+
+        ylearn = to_categorical(ylearn, len(set(ylearn)))
+        ypred = to_categorical(ypred, len(set(ypred)))
+
+        self.learn_data = (Xlearn, ylearn)
+        self.pred_data = (Xpred, ypred, npred)
+
+    def get_datasets(self):
+        return self.learn_data, self.pred_data
+
+    def get_classdict(self, inverse=True):
+        if inverse:
+            return {v:k for k,v in self.class_dict.items()}
+        else:
+            return self.class_dict
+
+    def split_dataset(self, X, y, names, method='holdout', splitrate=0.2, K=5):
+        if method == 'holdout':
+            assert splitrate is not None, 'holdout-splitrate is None.'
+
+            data_g = self.__holdout_cv(X, y, splitrate=splitrate)
+        elif method == 'kfold':
+            assert K is not None, 'K-params of K-Fold is None.'
+
+            data_g = self.__kfold_cv(X, y, K=K)
+        else:
+            raise ValueError('split-method: holdout or kfold')
+
+        data = [next(data_g) for _ in range(2)] # リスト0: train, 1: validation
+
+        self.splitdata = data
+
+    def get_splitdata(self):
+        return self.splitdata
+
+    def __holdout_cv(self, X, y, splitrate=0.2):
+        if type(splitrate) is float:
+            assert 0.0 < splitrate < 1.0, 'holdout-splitrate: from 0 to 1'
+        else:
+            raise TypeError('splitrate: float type between 0 and 1')
+
+        Xtrain, Xval, ytrain, yval = train_test_split(
+                X, y, test_size=splitrate)
+
+        splitdata = [(Xtrain,ytrain),(Xval,yval)]
+        for data in splitdata:
+            yield data
+
+    def __kfold_cv(self, X, y, K=5):
+        if isinstance(K,(int,float)):
+            if type(K) is float:
+                K = round(K)
+        else:
+            raise TypeError('K-param: int or float type.')
+
+        for train, val in KFold(n_splits=K, shuffle=True).split(X):
+            Xtrain, Xval = Xlearn[train], Xlearn[val]
+            ytrain, yval = ylearn[train], ylearn[val]
+
+        splitdata = [(Xtrain,ytrain),(Xval,yval)]
+        for data in splitdata:
+            yield data
 
 class ImageArrangement:
     def __init__(self, dataset_dirpath=None, color='rgb', height=224, width=224):

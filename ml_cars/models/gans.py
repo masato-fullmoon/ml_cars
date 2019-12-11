@@ -47,8 +47,12 @@ class GANmodel:
         self.summaryout = summaryout
 
         if initflag:
-            self.k_init = KernelInit().kernel_initializer(initname=k_initname, kwargs)
-            self.b_init = BiasInit().bias_initializer(initname=b_initname, kwargs)
+            self.k_init = KernelInit().kernel_initializer(
+                    initname=k_initname, params_dict=kwargs
+                    )
+            self.b_init = BiasInit().bias_initializer(
+                    initname=b_initname, params_dict=kwargs
+                    )
 
         if auto_zdim:
             try:
@@ -76,12 +80,24 @@ class GANmodel:
 
     def dcgan_train(self, epochs=2000, batch_size=200, num_div=2,
             save_iter=None, debug=False, breakpoint=1, gentype='tiled_generate',
-            tile_h=10, tile_w=10, savedir=None, dpi=500):
+            tile_h=10, tile_w=10, savebasedir=None, dpi=500):
         assert gentype in ('tiled_generate', 'each_save_generate'),\
                 'gentype: tiled_generate/each_save_generate'
 
+        try:
+            savedir = os.path.join(savebasedir,'{}-dcgan'.format(self.generator.name))
+        except:
+            if savebasedir is None:
+                savebasedir = os.path.join(os.path.expanduser('~'),'NormalDNN')
+            elif self.generator.name is None:
+                self.generator.name = 'Unknown_DCGAN_generator'
+            else:
+                raise Exception('Sorry, non-activated...')
+
+            savedir = os.path.join(savebasedir,'{}'.format(self.model.name))
+
+        savedir = mkdirs(os.path.join(savedir,gentype))
         samp_batch = batch_size//num_div
-        savedir = mkdirs(os.path.join(savedir, gentype))
 
         loss_dict = {
                 'd-real-loss':[],
@@ -124,8 +140,7 @@ class GANmodel:
                 elif (e%save_iter == 0) and (gentype == 'each_save_generate'):
                     self.post.each_save(
                             fake_img=fake_imgs[random.choice(range(samp_batch))],
-                            epoch=e, tile_h=tile_h, tile_w=tile_w,
-                            savedir=savedir, dpi=dpi
+                            epoch=e, tile_h=tile_h, tile_w=tile_w, savedir=savedir
                             )
 
             if (debug) and (e == breakpoint):
@@ -134,12 +149,26 @@ class GANmodel:
         return loss_dict
 
     #@Timer.timer
-    def property_visualization(self, loss_dict=None, gentype='tiled_generate', savedir=None, dpi=500):
+    def property_visualization(self, loss_dict=None, gentype='tiled_generate',
+            savebasedir=None, dpi=500):
+        try:
+            savedir = mkdirs(os.path.join(
+                savebasedir,'{}-dcgan'.format(self.generator.name))
+                )
+        except:
+            if savebasedir is None:
+                savebasedir = os.path.join(os.path.expanduser('~'),'NormalDNN')
+            elif self.generator.name is None:
+                self.generator.name = 'Unknown_DCGAN_generator'
+            else:
+                raise Exception('Sorry, non-activated...')
+
+            savedir = mkdirs(os.path.join(savebasedir,'{}'.format(self.model.name)))
+
         df = pd.DataFrame(loss_dict)
         df.index = range(1, df.shape[0]+1)
 
-        for c in df.columns:
-            pass
+        self.post.gan_loss_vis(loss_df=df, savedir=savedir, dpi=dpi)
 
     def __sample1_g_forward(self):
         if self.k_init and self.b_init:
