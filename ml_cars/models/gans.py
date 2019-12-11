@@ -9,7 +9,8 @@ from termcolor import cprint
 
 from models.learning_indicators import keras_losses
 from models.set_optimizers import optimizer_setup
-from models.model_initializers import KernelInit, BiasInit
+from models.layer_initializers import KernelInit, BiasInit
+from models.layer_regularizers import regularizers
 from utils.data_postprocessing import Visualizer
 from utils.base_support import mkdirs, Timer
 
@@ -133,7 +134,7 @@ class GANmodel:
             if (save_iter is not None) and (type(save_iter) is int):
                 if (e%save_iter == 0) and (gentype == 'tiled_generate'):
                     self.post.save_tiled_generate(
-                            epoch=e, generator=self.generator,
+                            fake_imgs=fake_imgs, epoch=e,
                             zdim=self.zdim, tile_h=tile_h, tile_w=tile_w,
                             savedir=savedir, dpi=dpi
                             )

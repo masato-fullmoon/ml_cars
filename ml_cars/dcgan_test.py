@@ -36,10 +36,10 @@ BATCHSIZE = CMD_ARGS.batchsize
 NUM_DIV = 2
 SAVE_ITERATION = 100
 DEBUG = CMD_ARGS.debug
-#GENERATE_TYPE = 'tiled_generate'
-GENERATE_TYPE = 'each_save_generate'
-TILE_HEIGHT = 500
-TIME_WIDTH = 500
+GENERATE_TYPE = 'tiled_generate'
+#GENERATE_TYPE = 'each_save_generate'
+TILE_HEIGHT = 10
+TIME_WIDTH = 10
 DPI = CMD_ARGS.dpi
 
 if __name__ == '__main__':

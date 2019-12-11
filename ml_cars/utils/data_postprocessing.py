@@ -154,17 +154,17 @@ class Visualizer(__VisualizerBase):
         plt.savefig(heatmap_path, dpi=dpi)
         plt.close()
 
-    def save_tiled_generate(self, epoch, generator, zdim=None,
+    def save_tiled_generate(self, fake_imgs, epoch, zdim=None,
             tile_h=10, tile_w=10, savedir=None, dpi=500):
-        generater_noise = np.random.normal(0,1,(reduce(operator.mul,(tile_h,tile_w)), zdim))
-        gen_imgs = 0.5*generator.predict(generater_noise)+0.5
+        #fake_imgs = 0.5*fake_imgs+0.5
+        fake_imgs = 127.5*fake_imgs+127.5
 
         fig, ax = plt.subplots(tile_h,tile_w)
 
         cnt = 0
         for h in range(tile_h):
             for w in range(tile_w):
-                ax[h,w].imshow(gen_imgs[cnt,:,:,0])
+                ax[h,w].imshow(fake_imgs[cnt,:,:,0])
                 ax[h,w].axis('off')
 
                 cnt += 1

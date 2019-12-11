@@ -8,28 +8,33 @@ function existscommand() {
 }
 
 function anaconda_install() {
-    SAVEBASEDIR=$1 # 保存先ディレクトリ, ホームディレクトリが楽
-    INSTALLERURL=`python anaconda_installer.py --ostype $2`
-
-    if ! existscommand wget; then
-        # curlコマンドで取得したファイル名を指定したディレクトリに送る方法
-        cd ${SAVEBASEDIR} && { curl -O ${INSTALLERURL} ; cd -; }
+    if [ -e `python --version` | grep 'Python 2.' ]; then
+        echo 'This Python is 2.x.x, you should install Python 3.x.x'
+        exit 1;
     else
-        wget -P ${SAVEBASEDIR} ${INSTALLERURL}
+        SAVEBASEDIR=$1 # 保存先ディレクトリ, ホームディレクトリが楽
+        INSTALLERURL=`python anaconda_installer.py --ostype $2`
+
+        if ! existscommand wget; then
+            # curlコマンドで取得したファイル名を指定したディレクトリに送る方法
+            cd ${SAVEBASEDIR} && { curl -O ${INSTALLERURL} ; cd -; }
+        else
+            wget -P ${SAVEBASEDIR} ${INSTALLERURL}
+        fi
     fi
 }
 
 # ---------- main programs -----------
 
 if [ `uname -s` == 'Darwin' ]; then
-    OS='MacOS'
+    OS='MacOS' # Macにインストールする人
 else
     OSTYPENAME=`expr substr $(uname -s) 1 5`
 
     if [ ${OSTYPENAME} == 'MINGW' ]; then
-        OS='Windows'
+        OS='Windows' # Git-for-Windowsとかにインストールする人
     elif [ ${OSTYPENAME} == 'Linux' ]; then
-        OS='Linux'
+        OS='Linux' # 我らがLinuxにインストールする人
     else
         echo 'Unknown os type: Darwin/MINGW/Linux'
         exit 1;
@@ -47,18 +52,10 @@ if ! existscommand conda; then
         read INSTALLFLAG
 
         if [ ${INSTALLFLAG} == 'yes' ]; then
-            ${PROCESSFLAG}=1
             echo 'Start to install Anaconda3.'
+            break
         elif [ ${INSTALLFLAG} == 'no' ]; then
-            ${PROCESSFLAG}=1
             echo 'Stop installing anaconda3, try again.'
-        elif [ ${#INSTALLFLAG} -eq 0 ]; then
-            ${PROCESSFLAG}=0
-        else
-            ${PROCESSFLAG}=0
-        fi
-
-        if [ ${PROCESSFLAG} -eq 1 ]; then
             break
         else
             continue
