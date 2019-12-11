@@ -8,12 +8,12 @@ function existscommand() {
 }
 
 function anaconda_install() {
-    if [ -e `python --version` | grep 'Python 2.' ]; then
+    if [ `python --version | grep 'Python 2.'` ]; then
         echo 'This Python is 2.x.x, you should install Python 3.x.x'
 
         SAVEBASEDIR=$1 # 保存先ディレクトリ, ホームディレクトリが楽
         INSTALLERURL=`python anaconda3_installer_py2.py $2`
-    elif [ -e `python --version` | grep 'Python 3.' ]; then
+    elif [ `python --version | grep 'Python 3.'` ]; then
         SAVEBASEDIR=$1
         INSTALLERURL=`python anaconda3_installer_py3.py $2`
     fi
