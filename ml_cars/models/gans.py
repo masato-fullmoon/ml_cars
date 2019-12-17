@@ -257,7 +257,7 @@ class GANmodel:
     def __summary(self, **kwargs):
         if self.summaryout:
             try:
-                with open('{}_summary.log'.format(model.name), 'w') as s:
+                with open('{}_summary.log'.format(kwargs['model'].name), 'w') as s:
                     for k in kwargs.keys():
                         kwargs[k].summary(print_ln=lambda x:s.write(x+NEWLINECODE))
             except Exception as err:

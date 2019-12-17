@@ -1,7 +1,9 @@
-from functools import partial
+from tensorflow.keras.layers import Layer
+from tensorflow.keras.metrics import binary_crossentropy
 from tensorflow.keras import backend as K
 from tensorflow.keras import losses
 from termcolor import cprint
+from functools import partial
 import tensorflow as tf
 
 def keras_losses(losstype='multi_classification'):
@@ -62,6 +64,30 @@ cosine               : cosine proximity, cosine similarity (data-relation)
         cprint(err_msg, 'yellow', attrs=['bold'])
 
         raise ValueError('Incorrect loss functions.')
+
+class VAELoss(Layer):
+    def set_z_mean(self, z_mean):
+        self.z_mean = z_mean
+
+    def set_z_sigma(self, z_sigma):
+        self.z_sigma = z_sigma
+
+    def call(self, inputs):
+        enc_inputs, dec_outputs = inputs[0], inputs[1]
+        vae_loss = self.__vae_loss(enc_inputs, dec_outputs)
+
+        self.add_loss(vae_loss, inputs=inputs)
+
+        return enc_inputs
+
+    def __vae_loss(self, inputs, outputs):
+        enc_inputs = K.flatten(inputs)
+        dec_outputs = K.flatten(outputs)
+
+        reconstruction_loss = binary_crossentropy(enc_inputs, dec_outputs)
+        kl_divergence = -5e-4*K.mean(1.0+self.z_sigma-K.square(self.z_mean)-K.exp(self.z_sigma), axis=-1)
+
+        return K.mean(reconstruction_loss+kl_divergence)
 
 class __IndicatorsBase:
     def __init__(self):
@@ -201,3 +227,9 @@ class LearningIndicators(__IndicatorsBase):
             return metrics
         else:
             raise TypeError('num_classes: int type')
+
+    def autoencoder_metrics(self):
+        return ['accuracy', self.dice_coef, self.jaccard_index, self.overlap_coef]
+
+    def regression_metrics(self):
+        return ['accuracy', 'mse', 'mae', self.rms, self.r2, self.rmse, self.mce]

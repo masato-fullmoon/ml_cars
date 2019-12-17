@@ -1,5 +1,5 @@
-#from multiprocessing import Pool
 from termcolor import cprint
+import multiprocessing
 import os
 import sys
 import glob
@@ -22,6 +22,8 @@ if OSNAME == 'nt':
     NEWLINECODE = '\r\n'
 else:
     NEWLINECODE = '\n'
+
+MODULES_BASEDIR = os.path.dirname(os.path.abspath(__file__))
 
 '''
 system supporting functions and classes
@@ -52,6 +54,29 @@ def mkdirs(dirpath=None, response=True):
             return dirpath
     else:
         raise TypeError('dirpath: str')
+
+def num_cpus_checker():
+    # 返すのは論理コア数のみ
+    return multiprocessing.cpu_count()
+
+def num_gpus_checker():
+    if OSNAME == 'posix':
+        scriptpath = os.path.join(MODULES_BASEDIR, 'linux_nvidia_gpuschecker.sh')
+        gpuspath = os.path.join(MODULES_BASEDIR, 'gpus.log')
+
+        act_command('bash {}'.format(scriptpath))
+
+        if os.path.exists(gpuspath):
+            with open(gpuspath, 'r') as g:
+                num_gpus = len(g.readlines())
+
+            os.remove(gpuspath)
+
+            return num_gpus
+        else:
+            raise FileNotFoundError('GPUs logfile is None.')
+    else:
+        raise OSError('Sorry, Linux only.')
 
 class Timer:
     def __init__(self, api='line', output=True):

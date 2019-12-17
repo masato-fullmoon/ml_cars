@@ -201,6 +201,22 @@ class __BaseModels:
 
         return x
 
-class Pretrain:
-    def __init__(self):
-        pass
+class Pretrain(__BaseModels):
+    def __init__(self, Xtrain, ytrain., gpusave=False, summary=False, summaryout=False,
+            modelname='sample1', optname='adam', fc_nodes=1024, fc_act='relu',
+            alpha=0.3, theta=1.0, optflag=True, custom=True, **kwargs):
+        super().__init__()
+
+        if gpusave:
+            phys_devices = tf.config.experimental.list_physical_devices('GPU')
+
+            if len(phys_devices) > 0:
+                for d in range(len(phys_devices)):
+                    tf.config.experimental.set_memory_growth(phys_devices[d], gpusave)
+                    cprint('memory growth: {}'.format(
+                        tf.config.experimental.get_memory_growth(phys_devices[d])),
+                        'cyan', attrs=['bold'])
+
+        self.Xtrain = Xtrain
+        self.ytrain = ytrain
+        self.post = Visualizer()

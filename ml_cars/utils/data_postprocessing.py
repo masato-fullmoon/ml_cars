@@ -200,7 +200,7 @@ class Visualizer(__VisualizerBase):
         plt.savefig(savepath, dpi=dpi)
 
     def autoencoder_recodec(self, prods, names, savedir=None,
-            resize_shape=None, normtype='noramlize'):
+            resize_shape=None, normtype='noramlize', color='rgb'):
         assert type(resize_shape) is tuple, \
                 'resize_shape: tuple, ex. (640,390).'
 
@@ -213,7 +213,12 @@ class Visualizer(__VisualizerBase):
 
         for name, prod in zip(names, prods):
             try:
-                gen_img = Image.fromarray(prod.astype(np.uint8)).resize(resize_shape)
+                if color == 'rgb':
+                    mode = 'RGB'
+                elif color == 'gray':
+                    mode = 'L'
+
+                gen_img = Image.fromarray(prod.astype(np.uint8)).resize(resize_shape).convert(mode)
                 gen_img.save(os.path.join(savedir,'{}_gen.jpg'.format(name)))
             except Exception as err:
                 cprint('Error: {}'.format(str(err)), 'red', attrs=['bold'])

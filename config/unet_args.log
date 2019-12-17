@@ -1,43 +1,3 @@
-*** [2019-12-09 16:27:23.211278] ***
-Namespace(alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)
-*** [2019-12-09 16:28:22.846701] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, width=224)
-*** [2019-12-09 16:29:12.395764] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 16:35:05.442732] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 16:36:49.315480] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 16:37:52.179436] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 16:38:51.642275] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 16:40:14.988232] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 16:43:19.418449] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 16:45:02.037673] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 16:46:54.227233] ***
-Namespace(activation='relu', alpha=0.3, batchsize=50, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 17:11:28.355584] ***
-Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
-*** [2019-12-09 17:14:39.878365] ***
-Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
-*** [2019-12-09 17:19:33.450010] ***
-Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
-*** [2019-12-09 17:21:37.778059] ***
-Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
-*** [2019-12-09 17:22:44.290389] ***
-Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=112, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=112)
-*** [2019-12-09 17:33:24.923553] ***
-Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
-*** [2019-12-09 17:36:22.460195] ***
-Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
-*** [2019-12-09 17:41:26.896707] ***
-Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
-*** [2019-12-09 17:42:15.992737] ***
-Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=1024, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
 *** [2019-12-09 17:44:23.255265] ***
 Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=512, gpusave=True, height=224, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=224)
 *** [2019-12-09 17:46:56.679941] ***
@@ -88,3 +48,43 @@ Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb',
 Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=64, ksize=5, optflag=True, optname='adam', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=64)
 *** [2019-12-09 21:26:00.225961] ***
 Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=64, ksize=5, optflag=True, optname='adam', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=64)
+*** [2019-12-11 23:56:16.180562] ***
+Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=64, ksize=5, optflag=True, optname='adam', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=64)
+*** [2019-12-12 00:14:09.284064] ***
+Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=64, ksize=5, optflag=True, optname='adam', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=64)
+*** [2019-12-12 00:16:39.662656] ***
+Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=64, ksize=5, optflag=True, optname='adam', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=64)
+*** [2019-12-12 00:19:05.263804] ***
+Namespace(activation='relu', alpha=0.3, batchsize=20, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=64, ksize=5, optflag=True, optname='adam', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=64)
+*** [2019-12-12 18:51:13.365295] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=112, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=112)
+*** [2019-12-12 18:52:43.526867] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
+*** [2019-12-12 21:14:26.473648] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
+*** [2019-12-12 22:42:48.095681] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
+*** [2019-12-12 22:46:49.670941] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
+*** [2019-12-12 22:50:18.017746] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
+*** [2019-12-12 22:59:12.795687] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=1, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
+*** [2019-12-12 22:59:28.759066] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
+*** [2019-12-12 23:14:07.715333] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=56)
+*** [2019-12-12 23:20:37.980730] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=112, ksize=5, optflag=True, optname='sgd', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=112)
+*** [2019-12-12 23:21:50.317096] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=63, ksize=5, optflag=True, optname='sgd', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=63)
+*** [2019-12-12 23:23:13.511635] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=28, ksize=5, optflag=True, optname='sgd', preprocessing='standard', split='holdout', splitrate=0.2, summary=True, summaryout=False, theta=1.0, verbose=1, width=28)
+*** [2019-12-12 23:48:47.577598] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='standard', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, verbose=0, width=56)
+*** [2019-12-13 15:17:17.337072] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='sgd', preprocessing='standard', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, verbose=0, width=56)
+*** [2019-12-13 15:56:37.653443] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='adam', preprocessing='standard', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, verbose=0, width=56)
+*** [2019-12-13 16:34:55.706995] ***
+Namespace(activation='relu', alpha=0.3, batchsize=64, caption=True, color='rgb', dpi=500, epochs=100, filters=64, gpusave=True, height=56, ksize=5, optflag=True, optname='adam', preprocessing='standard', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, verbose=0, width=56)

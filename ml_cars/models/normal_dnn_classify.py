@@ -7,6 +7,7 @@ from tensorflow.keras.layers import LeakyReLU
 from tensorflow.keras.layers import PReLU
 from tensorflow.keras.layers import ELU
 from tensorflow.keras.layers import ThresholdedReLU
+from tensorflow.keras.utils import multi_gpu_model
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.vgg19 import VGG19
 from tensorflow.keras.applications.xception import Xception
@@ -20,11 +21,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 
 # ----- original modules -----
+
 from utils.base_support import mkdirs, Timer
+from utils.base_support import num_gpus_checker
 from utils.data_postprocessing import Visualizer
 from models.set_optimizers import optimizer_setup
 from models.learning_indicators import keras_losses
 from models.learning_indicators import LearningIndicators
+from models.layer_initializers import KernelInit, BiasInit
+from models.layer_regularizers import regularizers
+
 # ----- original modules end -----
 
 import tensorflow as tf
@@ -46,21 +52,38 @@ class __BaseModels:
         '''
         pass
 
-    def sample_forward_1(self, Xshape, yshape, nodes=1024,
-            activation='relu', alpha=0.3, theta=1.0):
+    def sample_forward(self, Xshape, yshape, nodes=1024,
+            activation='relu', alpha=0.3, theta=1.0, **kwargs):
+        if len(kwargs) == 3:
+            try:
+                k_init = kwargs['k_init']
+                b_init = kwargs['b_init']
+                a_regu = kwargs['a_regu']
+            except Exception as err:
+                cprint('Error: {}'.format(str(err)), 'red', attrs=['bold'])
+                sys.exit(1)
+        else:
+            k_init = 'glorot_uniform'
+            b_init = 'zeros'
+            a_regu = None
+
         with tf.device('/cpu:0'):
             inputs = Input(shape=Xshape[1:])
 
-            x = Conv2D(16,(5,5),strides=(2,2),padding='same')(inputs)
+            x = Conv2D(16,(5,5),strides=(2,2),padding='same',
+                    activity_regularizer=a_regu)(inputs)
             x = Activation('relu')(x)
             x = BatchNormalization()(x)
-            x = Conv2D(32,(5,5),strides=(2,2),padding='same')(x)
+            x = Conv2D(32,(5,5),strides=(2,2),padding='same',
+                    activity_regularizer=a_regu)(x)
             x = Activation('relu')(x)
             x = BatchNormalization()(x)
             x = MaxPooling2D((2,2))(x)
-            x = Conv2D(64,(5,5),strides=(2,2),padding='same')(x)
+            x = Conv2D(64,(5,5),strides=(2,2),padding='same',
+                    activity_regularizer=a_regu)(x)
             x = Activation('relu')(x)
-            x = Conv2D(64,(5,5),strides=(2,2),padding='same')(x)
+            x = Conv2D(64,(5,5),strides=(2,2),padding='same',
+                    activity_regularizer=a_regu)(x)
             x = Activation('relu')(x)
             x = BatchNormalization()(x)
             x = MaxPooling2D((2,2))(x)
@@ -69,7 +92,7 @@ class __BaseModels:
             fc = Flatten()(x)
             fc = self.__fc_layer_activation_custom(
                     fc, nodes, activation,
-                    alpha, theta
+                    alpha, theta, k_init, b_init, a_regu
                     )
             fc = Dropout(0.1)(fc)
 
@@ -77,32 +100,21 @@ class __BaseModels:
 
         return None, Model(inputs, outputs, name='normal-sample-1')
 
-    def sample_forward_2(self, Xshape, yshape, nodes=1024,
-            activation='relu', alpha=0.3, theta=1.0):
-        with tf.device('/cpu:0'):
-            inputs = Input(shape=Xshape[1:])
-
-            x = Conv2D(32,(3,3),padding='same',activation='relu')(inputs)
-            x = MaxPooling2D((2,2))(x)
-            x = Dropout(0.25)(x)
-            x = Conv2D(64,(3,3),padding='same',activation='relu')(x)
-            x = Conv2D(64,(3,3),padding='same',activation='relu')(x)
-            x = MaxPooling2D((2,2))(x)
-            x = Dropout(0.25)(x)
-
-            fc = Flatten()(x)
-            fc = self.__fc_layer_activation_custom(
-                    fc, nodes, activation,
-                    alpha, theta
-                    )
-            fc = Dropout(0.5)(fc)
-
-            outputs = Dense(yshape[-1], activation='softmax')(fc)
-
-        return None, Model(inputs, outputs, name='normal-sample-2')
-
     def vgg16_forward(self, Xshape, yshape, custom=True,
-            nodes=1024, activation='relu', alpha=0.3, theta=1.0):
+            nodes=1024, activation='relu', alpha=0.3, theta=1.0, **kwargs):
+        if len(kwargs) == 3:
+            try:
+                k_init = kwargs['k_init']
+                b_init = kwargs['b_init']
+                a_regu = kwargs['a_regu']
+            except Exception as err:
+                cprint('Error: {}'.format(str(err)), 'red', attrs=['bold'])
+                sys.exit(1)
+        else:
+            k_init = 'glorot_uniform'
+            b_init = 'zeros'
+            a_regu = None
+
         if custom:
             with tf.device('/cpu:0'):
                 vgg16 = VGG16(weights=None, include_top=False,
@@ -113,11 +125,13 @@ class __BaseModels:
                 fc = Flatten()(inputs)
                 fc = self.__fc_layer_activation_custom(
                         fc, nodes, activation,
-                        alpha, theta
+                        alpha, theta, k_init, b_init, a_regu
                         )
                 fc = BatchNormalization()(fc)
 
-                outputs = Dense(yshape[-1],activation='softmax')(fc)
+                outputs = Dense(yshape[-1],activation='softmax',
+                        kernel_initialier=k_init,bias_initializer=b_init,
+                        activity_regularizer=a_regu)(fc)
 
                 top_model = Model(inputs,outputs,name='VGG16-FC')
                 total_model = Model(vgg16.inputs,top_model(vgg16.outputs),
@@ -132,7 +146,20 @@ class __BaseModels:
             return None, vgg16
 
     def vgg19_forward(self, Xshape, yshape, custom=True,
-            nodes=1024, activation='relu', alpha=0.3, theta=1.0):
+            nodes=1024, activation='relu', alpha=0.3, theta=1.0, **kwargs):
+        if len(kwargs) == 3:
+            try:
+                k_init = kwargs['k_init']
+                b_init = kwargs['b_init']
+                a_regu = kwargs['a_regu']
+            except Exception as err:
+                cprint('Error: {}'.format(str(err)), 'red', attrs=['bold'])
+                sys.exit(1)
+        else:
+            k_init = 'glorot_uniform'
+            b_init = 'zeros'
+            a_regu = None
+
         if custom:
             with tf.device('/cpu:0'):
                 vgg19 = VGG19(weights=None,include_top=False,
@@ -143,7 +170,7 @@ class __BaseModels:
                 fc = Flatten()(inputs)
                 fc = self.__fc_layer_activation_custom(
                         fc, nodes, activation,
-                        alpha, theta
+                        alpha, theta, k_init, b_init, a_regu
                         )
                 fc = BatchNormalization()(fc)
 
@@ -161,7 +188,8 @@ class __BaseModels:
 
             return None, vgg19
 
-    def __fc_layer_activation_custom(self, inputs, nodes, activation, alpha, theta):
+    def __fc_layer_activation_custom(self, inputs, nodes, activation,
+            alpha, theta, k_init, b_init, a_regu):
         activations = (
                 'relu','tanh','softplus',
                 'softsign','selu','sigmoid',
@@ -173,10 +201,14 @@ class __BaseModels:
                 )
 
         if activation in activations:
-            x = Dense(nodes)(inputs)
+            x = Dense(nodes, kernel_initialier=k_init,
+                    bias_initializer=b_init,
+                    activity_regularizer=a_regu)(inputs)
             x = Activation(activation)(x)
         elif activation in advanced_activations:
-            x = Dense(nodes)(inputs)
+            x = Dense(nodes, kernel_initialier=k_init,
+                    bias_initializer=b_init,
+                    activity_regularizer=a_regu)(inputs)
 
             if activation == 'leakyrelu':
                 assert 0<alpha<1, 'LeakyReLU-alpha param: Incorrect.'
@@ -197,44 +229,44 @@ class __BaseModels:
 
 class NormalDNN(__BaseModels):
     def __init__(self, Xtrain, ytrain, gpusave=False, summary=False, summaryout=False,
-            modelname='sample1', optname='adam', fc_nodes=1024, fc_act='relu',
+            modelname='sample', optname='adam', fc_nodes=1024, fc_act='relu',
             alpha=0.3, theta=1.0, optflag=True, custom=True, **kwargs):
         super().__init__()
 
-        cfg = tf.ConfigProto(allow_soft_placement=gpusave)
-        cfg.gpu_options.allow_growth = gpusave
-        K.set_session(tf.Session(config=cfg))
+        if gpusave:
+            phys_devices = tf.config.experimental.list_physical_devices('GPU')
+
+            if len(phys_devices) > 0:
+                for d in range(len(phys_devices)):
+                    tf.config.experimental.set_memory_growth(phys_devices[d], gpusave)
+                    cprint('memory growth: {}'.format(
+                        tf.config.experimental.get_memory_growth(phys_devices[d])),
+                        'cyan', attrs=['bold'])
 
         self.Xtrain = Xtrain
         self.ytrain = ytrain
         self.post = Visualizer()
 
-        if modelname == 'sample1':
-            self.top, self.model = self.sample_forward_1(
-                    Xshape=Xtrain.shape, yshape=ytrain.shape,
-                    nodes=fc_nodes, activation=fc_act,
-                    alpha=alpha, theta=theta
-                    )
-        elif modelname == 'sample2':
-            self.top, self.model = self.sample_forward_2(
+        if modelname == 'sample':
+            top, model = self.sample_forward(
                     Xshape=Xtrain.shape, yshape=ytrain.shape,
                     nodes=fc_nodes, activation=fc_act,
                     alpha=alpha, theta=theta
                     )
         elif modelname == 'vgg16':
-            self.top, self.model = self.vgg16_forward(
+            top, model = self.vgg16_forward(
                     Xshape=Xtrain.shape, yshape=ytrain.shape,
                     custom=custom, nodes=fc_nodes, activation=fc_act,
                     alpha=alpha, theta=theta
                     )
         elif modelname == 'vgg19':
-            self.top, self.model = self.vgg19_forward(
+            top, model = self.vgg19_forward(
                     Xshape=Xtrain.shape, yshape=ytrain.shape,
                     custom=custom, nodes=fc_nodes, activation=fc_act,
                     alpha=alpha, theta=theta
                     )
         elif modelname == 'load':
-            self.top, self.model = self.__load_model_arch()
+            top, model = self.__load_model_arch()
         else:
             raise ValueError('Sorry, test now.')
 
@@ -245,7 +277,13 @@ class NormalDNN(__BaseModels):
             indic_obj = LearningIndicators()
             met = indic_obj.classify_metrics(num_classes=ytrain.shape[-1])
 
-            self.model.compile(optimizer=opt, loss=loss, metrics=met)
+            if top is not None:
+                top.compile(optimizer=opt, loss=loss, metrics=met)
+
+            model = self.__multi_gpus_checker(model)
+            model.compile(optimizer=opt, loss=loss, metrics=met)
+
+        self.top, self.model = top, model
 
         if summary:
             self.__summary(summaryout=summaryout)
@@ -380,6 +418,17 @@ class NormalDNN(__BaseModels):
                         )
             else:
                 raise ValueError('Sorry, test now.')
+
+    def __multi_gpus_checker(self, model):
+        num_gpus = num_gpus_checker()
+
+        if num_gpus >= 2:
+            cprint('multi-gpus model available.', 'cyan', attrs=['bold'])
+            p_model = multi_gpu_model(model, gpus=num_gpus)
+            return p_model
+        else:
+            cprint('Single or no gpus', 'yellow', attrs=['bold'])
+            return model
 
     def __load_modelarch(self, loadpath, optflag=False):
         _, e = os.path.splitext(loadpath)
@@ -516,9 +565,15 @@ class NormalDNNCrossValidation(__BaseModels):
             alpha=0.3, theta=1.0, optflag=True, custom=True, splitrate=0.2):
         super().__init__()
 
-        cfg = tf.ConfigProto(allow_soft_placement=gpusave)
-        cfg.gpu_options.allow_growth = gpusave
-        K.set_session(tf.Session(config=cfg))
+        if gpusave:
+            phys_devices = tf.config.experimental.list_physical_devices('GPU')
+
+            if len(phys_devices) > 0:
+                for d in range(len(phys_devices)):
+                    tf.config.experimental.set_memory_growth(phys_devices[d], gpusave)
+                    cprint('memory growth: {}'.format(
+                        tf.config.experimental.get_memory_growth(phys_devices[d])),
+                        'cyan', attrs=['bold'])
 
         self.learn, self.pred = self.__data_split(X, y, names, splitrate)
 
@@ -568,6 +623,7 @@ class NormalDNNCrossValidation(__BaseModels):
                     Xshape=Xlearn.shape, yshape=ylearn.shape,
                     param_dict=kwargs
                     )
+            model = self.__multi_gpus_checker(model)
 
             savedir = mkdirs(
                     os.path.join(bd,'{}-K-{}'.format(model.name, cnt))
@@ -703,15 +759,20 @@ class NormalDNNCrossValidation(__BaseModels):
 
         return (Xlearn, ylearn), (Xpred, ypred, npred)
 
+    def __multi_gpus_checker(self, model):
+        num_gpus = num_gpus_checker()
+
+        if num_gpus >= 2:
+            cprint('multi-gpus model available.', 'cyan', attrs=['bold'])
+            p_model = multi_gpu_model(model, gpus=num_gpus)
+            return p_model
+        else:
+            cprint('Single or no gpus', 'yellow', attrs=['bold'])
+            return model
+
     def __forwards(self, Xshape, yshape):
-        if self.modelname == 'sample1':
-            top, model = self.sample_forward_1(
-                    Xshape=Xshape, yshape=yshape,
-                    nodes=self.nodes, activation=self.activation,
-                    alpha=self.alpha, theta=self.theta
-                    )
-        elif self.modelname == 'sample2':
-            top, model = self.sample_forward_2(
+        if self.modelname == 'sample':
+            top, model = self.sample_forward(
                     Xshape=Xshape, yshape=yshape,
                     nodes=self.nodes, activation=self.activation,
                     alpha=self.alpha, theta=self.theta

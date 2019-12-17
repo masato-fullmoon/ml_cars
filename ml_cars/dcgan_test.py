@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     ''' ----- DCGAN images generate '''
 
-    # Adamを使う時はこれらを**kwargsとしてインスタンスに入れる
+    # 適当な勾配器を使う時はこれらを**kwargsとしてインスタンスに入れる
     lr = 2e-4
     beta_1 = 0.05
     beta_2 = 0.67
