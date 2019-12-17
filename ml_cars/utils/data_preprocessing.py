@@ -66,7 +66,7 @@ def dataset_rename(in_dirpath=None, out_dirpath=None, renametype='supervised'):
         os.rmdir(in_dirpath)
 
 class SampleImageArrangement:
-    def __init__(self, imgtype='mnist'):
+    def __init__(self, imgtype='mnist', normtype='normalize'):
         if imgtype == 'mnist':
             # grayscale digit images (28,28)
             (Xlearn, ylearn), (Xpred, ypred) = mnist.load_data()
@@ -80,14 +80,20 @@ class SampleImageArrangement:
         else:
             raise ValueError('imgtype: mnist/cifar10')
 
-        Xlearn = Xlearn.astype('float32')/256.
-        Xpred = Xpred.astype('float32')/256.
+        if normtype == 'normalize':
+            Xlearn = Xlearn.astype('float32')/256.
+            Xpred = Xpred.astype('float32')/256.
+        elif normtype == 'standard':
+            Xlearn = Xlearn.astype('float32')/127.5-1.0
+            Xpreds = Xpreds.astype('float32')/127.5-1.0
+        else:
+            raise ValueError('normtype: normalize/standard')
 
         npred = np.array([str(n) for n in ypred], dtype=str)
-        self.class_dict = {str(d):i for i,d in enumerate(set(ylearn))}
+        self.class_dict = {str(d):i for i,d in enumerate(set(ylearn.flatten()))}
 
-        ylearn = to_categorical(ylearn, len(set(ylearn)))
-        ypred = to_categorical(ypred, len(set(ypred)))
+        ylearn = to_categorical(ylearn, len(set(ylearn.flatten())))
+        ypred = to_categorical(ypred, len(set(ypred.flatten())))
 
         self.learn_data = (Xlearn, ylearn)
         self.pred_data = (Xpred, ypred, npred)
@@ -101,7 +107,7 @@ class SampleImageArrangement:
         else:
             return self.class_dict
 
-    def split_dataset(self, X, y, names, method='holdout', splitrate=0.2, K=5):
+    def split_dataset(self, X, y, method='holdout', splitrate=0.2, K=5):
         if method == 'holdout':
             assert splitrate is not None, 'holdout-splitrate is None.'
 
@@ -115,10 +121,7 @@ class SampleImageArrangement:
 
         data = [next(data_g) for _ in range(2)] # リスト0: train, 1: validation
 
-        self.splitdata = data
-
-    def get_splitdata(self):
-        return self.splitdata
+        return data
 
     def __holdout_cv(self, X, y, splitrate=0.2):
         if type(splitrate) is float:

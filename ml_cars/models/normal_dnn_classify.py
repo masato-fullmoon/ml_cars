@@ -561,8 +561,10 @@ class NormalDNN(__BaseModels):
 
 class NormalDNNCrossValidation(__BaseModels):
     def __init__(self, X, y, names, gpusave=False, summary=False, summaryout=False,
-            modelname='sample1', optname='adam', fc_nodes=1024, fc_act='relu',
-            alpha=0.3, theta=1.0, optflag=True, custom=True, splitrate=0.2):
+            modelname='sample', optname='adam', fc_nodes=1024, fc_act='relu',
+            alpha=0.3, theta=1.0, optflag=True, custom=True, splitrate=0.2,
+            init_regu_flag=False, k_init='he_normal', b_init='zeros',
+            a_regu=None):
         super().__init__()
 
         if gpusave:
@@ -783,7 +785,7 @@ class NormalDNNCrossValidation(__BaseModels):
                     custom=self.custom, nodes=self.nodes,
                     activation=self.activation, alpha=self.alpha, theta=self.theta
                     )
-        elif modelname == 'vgg19':
+        elif self.modelname == 'vgg19':
             top, model = self.vgg19_forward(
                     Xshape=Xshape, yshape=yshape,
                     custom=self.custom, nodes=self.nodes,

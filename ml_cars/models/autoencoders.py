@@ -495,13 +495,9 @@ class __BaseVAEencoder:
 
         return z_mean, z_sigma
 
-    def __init__(self, Xtrain, gpusave=False, summary=False, summaryout=False,
-            optflag=True, optname='adam', activation='relu', alpha=0.3, theta=1.0,
-            out_act='linear', input_filters=512, traintype='unet', **kwargs):
-
 class VAE(__BaseVAEencoder):
     def __init__(self, Xtrain, gpusave=False, summary=False, summaryout=False,
-            optflag=True, optname='adam', traintype='vae', latent_dim=2, initflag=False
+            optflag=True, optname='adam', traintype='vae', latent_dim=2, initflag=False,
             activation='relu', out_act='linear', alpha=0.3, theta=1.0, **kwargs):
         super().__init__()
 

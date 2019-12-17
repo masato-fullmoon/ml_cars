@@ -195,7 +195,7 @@ class CommandLineArgs:
                 )
         p.add_argument(
                 '-M', '--modelname', help='modelname you use',
-                type=str, choices=['sample1','sample2','vgg16','vgg19'], default='sample1',
+                type=str, choices=['sample','vgg16','vgg19'], default='sample1',
                 required=False
                 )
         p.add_argument(
