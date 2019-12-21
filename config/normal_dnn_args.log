@@ -94,3 +94,5 @@ Namespace(activation='leakyrelu', alpha=0.35, batchsize=32, caption=True, color=
 Namespace(activation='leakyrelu', alpha=0.35, batchsize=32, caption=True, color='rgb', dpi=500, epochs=1, gpusave=True, height=224, ksize=5, modelname='sample1', nodes=1024, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, verbose=0, width=224)
 *** [2019-12-17 16:28:51.131512] ***
 Namespace(activation='leakyrelu', alpha=0.35, batchsize=32, caption=True, color='rgb', dpi=500, epochs=1, gpusave=True, height=224, ksize=5, modelname='sample', nodes=1024, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, verbose=0, width=224)
+*** [2019-12-18 20:52:56.845153] ***
+Namespace(activation='leakyrelu', alpha=0.35, batchsize=32, caption=True, color='rgb', dpi=500, epochs=1, gpusave=True, height=224, ksize=5, modelname='sample', nodes=1024, optflag=True, optname='sgd', preprocessing='normalize', split='holdout', splitrate=0.2, summary=False, summaryout=False, theta=1.0, verbose=0, width=224)
