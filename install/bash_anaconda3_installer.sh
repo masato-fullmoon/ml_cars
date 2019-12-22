@@ -78,7 +78,6 @@ do
         # シングルクォーテーションの場合で囲まれた部分を抽出
         #url=`echo "${href}" | sed "s/^.*"\(.*\)".*$/\1/"`
         urlarray=( "${urlarray[@]}" "${url}" )
-        idxarray=( "${idxarray[@]}" "" )
     fi
 done
 
@@ -93,6 +92,10 @@ done
 
 # bashで算術計算するときは以下のようにするといい
 lastidx=`echo "$((${#urlarray[@]}-1))"`
+
+if [ ${lastidx} -eq -1 ]; then
+    lastidx=0
+fi
 
 while :
 do
@@ -140,6 +143,9 @@ do
         if [ ${startflag} == 'yes' ]; then
             SuccessMassage "Activate Installation [${installer}]"
             Anaconda3Install ${OS} ${installer}
+
+            WarniningMassage "Start to remove installer file [${installer}]"
+            rm ${installer}
 
             if [ $? -eq 0 ]; then
                 SuccessMassage "Anaconda3 Installation Acomplished."
