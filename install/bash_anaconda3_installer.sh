@@ -37,6 +37,8 @@ function Anaconda3Install() {
 
     if [ $1 == 'Linux' ]; then
         bash $2
+    elif [ $1 == 'Windows' ]; then
+        $2
     else
         ErrorMassage "Sorry, Linux only. Test now."
         exit
@@ -60,7 +62,7 @@ else
     fi
 fi
 
-ANACONDASAVEDIR=~
+ANACONDASAVEDIR="$HOME"
 ANACONDADLURL='https://www.anaconda.com/distribution/'
 
 URLHREFS=`curl "${ANACONDADLURL}" | grep 'Anaconda3' | grep 'href'`
@@ -70,16 +72,20 @@ URLHREFS=`curl "${ANACONDADLURL}" | grep 'Anaconda3' | grep 'href'`
 # 空配列の宣言
 declare -a urlarray=()
 
-for href in ${URLHREFS}
+#for href in ${URLHREFS}
+for href in ${nanika}
 do
     if [ `echo "${href}" | grep 'href' | grep "${OS}"` ]; then
-        # ダブルクォーテーションの場合で囲まれた部分を抽出
+            # ダブルクォーテーションの場合で囲まれた部分を抽出
         url=`echo "${href}" | sed 's/^.*"\(.*\)".*$/\1/'`
         # シングルクォーテーションの場合で囲まれた部分を抽出
         #url=`echo "${href}" | sed "s/^.*"\(.*\)".*$/\1/"`
+
+        echo "${url}"
         urlarray=( "${urlarray[@]}" "${url}" )
     fi
 done
+exit
 
 # 配列のインデックスを参照しつつ展開する配列のfor文
 declare -a idxarray=()
@@ -122,7 +128,7 @@ do
 
             if [ $? -eq 0 ]; then
                 SuccessMassage '----------- Anaconda3 Installer Acomplished. ----------'
-                installer=${ANACONDASAVEDIR}/`basename "${installerurl}"`
+                installer="${ANACONDASAVEDIR}"/`basename "${installerurl}"`
 
                 break
             else
@@ -142,13 +148,13 @@ do
     else
         if [ ${startflag} == 'yes' ]; then
             SuccessMassage "Activate Installation [${installer}]"
-            Anaconda3Install ${OS} ${installer}
+            Anaconda3Install ${OS} "${installer}"
 
             WarniningMassage "Start to remove installer file [${installer}]"
-            rm ${installer}
+            rm "${installer}"
 
             if [ $? -eq 0 ]; then
-                SuccessMassage "Anaconda3 Installation Acomplished."
+                SuccessMassage "Anaconda3 Installation Acomplished at all."
                 break
             else
                 ErrorMassage "Anaconda3 Installation Failed. Try again."
